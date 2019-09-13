@@ -1,0 +1,9 @@
+sudo : required
+services: 
+  - docker #travis CI will install a copy of docker automatically
+
+before_install: #things that have to take place before we run the test
+  - docker build -t shashidhar/docker-react -f Dockerfile.dev .  # just a normal docker build command
+
+script:   # a script to run the test
+  - docker run -e CI=true shashidhar/docker-react npm run test

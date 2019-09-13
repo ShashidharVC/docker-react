@@ -1,0 +1,19 @@
+version: '3'
+services:
+  web:
+    build:        # just `build: .` wont work here as our we have a custom dockerfile.dev. so use the below 2 parameters;
+      context: .  # project location
+      dockerfile: Dockerfile.dev  # custom docerfile location
+    ports:
+      - "3000:3000"  
+    volumes:    # used to create a short hand for the long command we type for volumes to be created.
+      - /app/node_modules  # 1st in the list, specify the folder that doesn't want to be mapped.
+      - .:/app #current folder outside the container is being mapped to /app in the container
+  tests:
+    build: 
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes: 
+      - /app/node_modules
+      - .:/app
+    command: ["npm","run","test"]             
